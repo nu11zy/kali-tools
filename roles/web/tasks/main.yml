@@ -1,0 +1,23 @@
+---
+- name: "Apt update"
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+  become: true
+  become_method: sudo
+
+- name: "Web tools"
+  package:
+    name:
+      - firefox-esr
+    state: latest
+  become: true
+  become_method: sudo
+  
+  - name: "Remove old firefox profile"
+  file: 
+    path: "{{ ansible_env.HOME }}/.mozilla"
+    state: absent
+
+- name: "Untar firefox profile"
+  unarchive:
+    src: "{{ playbook_dir }}/roles/web/files/.mozilla.tar.gz"
+    dest: "{{ ansible_env.HOME }}/.mozilla"
