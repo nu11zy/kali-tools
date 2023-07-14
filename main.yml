@@ -1,0 +1,6 @@
+---
+- name: "Kali Tools"
+  hosts: localhost
+  connection: local
+  roles:
+    - role: "roles/web"
